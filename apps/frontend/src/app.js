@@ -784,21 +784,36 @@ function renderDirectives() {
   (engineData.directives || []).forEach(dir => {
     const card = document.createElement('div');
     card.className = 'directive-card';
-    const priorityBadge = dir.priority === 'P0_URGENT' ? 'badge-danger' : 'badge-warning';
+    const isP0 = dir.priority === 'P0_URGENT';
+    const priorityLabel = isP0 ? '🚨 P0 Urgent' : '⚡ P1 High';
+    const priorityClass = isP0 ? 'p0-urgent' : 'p1-high';
 
     card.innerHTML = `
-      <div>
+      <div class="directive-top">
         <div class="directive-header">
-          <span class="badge ${priorityBadge}">${dir.priority.replace('_', ' ')}</span>
-          <span style="font-size:0.75rem; color:var(--text-muted)">${dir.territory}</span>
+          <span class="directive-priority-badge ${priorityClass}">
+            ${priorityLabel}
+          </span>
+          <span class="directive-territory-tag">
+            📍 ${dir.territory}
+          </span>
         </div>
         <h4>${dir.action_title}</h4>
-        <div class="directive-action"><strong>Mandate:</strong> ${dir.recommended_action}</div>
-        <div class="directive-why"><strong>Commercial Root:</strong> ${dir.commercial_rationale}</div>
+        <div class="directive-mandate-box">
+          <span class="box-tag">⚡ ACTION MANDATE</span>
+          <p>${dir.recommended_action}</p>
+        </div>
+        <div class="directive-rationale-box">
+          <span class="box-tag">🎯 COMMERCIAL ROOT</span>
+          <p>${dir.commercial_rationale}</p>
+        </div>
       </div>
 
       <div class="directive-footer">
-        <div class="directive-rev">Impact: ₹${dir.revenue_impact_inr.toLocaleString('en-IN')}</div>
+        <div class="directive-rev-wrap">
+          <span class="rev-lbl">REVENUE IMPACT</span>
+          <span class="directive-rev">₹${dir.revenue_impact_inr.toLocaleString('en-IN')}</span>
+        </div>
         <button class="btn-whatsapp" data-id="${dir.directive_id}">
           <span>📲</span> Dispatch WhatsApp
         </button>
@@ -891,7 +906,14 @@ function renderRetailer360() {
     card.className = 'retailer-card';
 
     const isDormant = r.days_since_last_order > 60;
-    const dormantBadge = isDormant ? '<span class="badge badge-danger">Silent Churn (&gt;60d)</span>' : '<span class="badge badge-success">Active</span>';
+    const isWarning = r.days_since_last_order > 20 && !isDormant;
+
+    let dormantBadge = `<span class="retailer-health-badge health-active">✓ Active (${r.days_since_last_order}d)</span>`;
+    if (isDormant) {
+      dormantBadge = `<span class="retailer-health-badge health-churn">🚨 Silent Churn (${r.days_since_last_order}d)</span>`;
+    } else if (isWarning) {
+      dormantBadge = `<span class="retailer-health-badge health-warning">⚠️ At Risk (${r.days_since_last_order}d)</span>`;
+    }
 
     card.innerHTML = `
       <div class="retailer-card-header">
@@ -909,7 +931,7 @@ function renderRetailer360() {
         </div>
         <div>
           <div class="retailer-stat-lbl">Days Dormant</div>
-          <div class="retailer-stat-val" style="color:${isDormant ? 'var(--accent-rose)' : 'inherit'}">${r.days_since_last_order}d</div>
+          <div class="retailer-stat-val" style="color:${isDormant ? 'var(--accent-rose)' : (isWarning ? 'var(--accent-amber)' : 'inherit')}">${r.days_since_last_order}d</div>
         </div>
         <div>
           <div class="retailer-stat-lbl">Assigned Rep</div>
@@ -921,7 +943,7 @@ function renderRetailer360() {
         </div>
       </div>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px">
+      <div class="retailer-card-footer">
         ${dormantBadge}
         <button class="btn btn-secondary btn-xs action-schedule-visit" data-id="${r.retailer_id}">
           <span>📅</span> Prioritize Visit
