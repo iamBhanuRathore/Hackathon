@@ -100,6 +100,48 @@ export interface AuthSession {
 }
 ```
 
+### D. Growth Engine Dynamic Data & Mutation Contracts
+Contract defined in [`packages/shared/contracts/growth-engine.ts`](file:///Users/bhanurathore/projects/hack/packages/shared/contracts/growth-engine.ts):
+
+```typescript
+export interface RetailerRecord {
+  retailer_id: string;
+  retailer_name: string;
+  retailer_type: string;
+  tier: 'A' | 'B' | 'C';
+  city: string;
+  distributor_name: string;
+  rep_name: string;
+  credit_limit: number;
+  last_order_date: string;
+  days_since_last_order: number;
+  sales_value_12m: number;
+  orders_12m: number;
+  status: 'Active' | 'Dormant' | 'Inactive';
+}
+
+export type ManagedEntityType = 'retailers' | 'leakages' | 'directives' | 'schemes' | 'reps';
+
+export interface DataMutationResponse<T = any> {
+  action: 'CREATE' | 'UPDATE' | 'DELETE';
+  entityType: ManagedEntityType;
+  record?: T;
+  recalculatedKpis: EngineKPIs;
+  summary: {
+    totalRecords: number;
+    updatedAt: string;
+  };
+}
+```
+
+#### Real-time Mutation & Query Endpoints:
+- `GET /api/v1/engine/retailers?search=&tier=&status=` — Query audited retailer universe
+- `GET /api/v1/data/:entity?search=` — Query entities (`retailers`, `leakages`, `directives`, `schemes`, `reps`)
+- `POST /api/v1/data/:entity` — Real-time entity creation with auto ID & live KPI recalculation
+- `PUT /api/v1/data/:entity/:id` — Live record edit with automatic KPI re-computation & disk persistence
+- `DELETE /api/v1/data/:entity/:id` — Live record deletion with dynamic rollback & metric refresh
+- `POST /api/v1/data/reset` — Restore dataset to initial verified benchmark backup
+
 ---
 
 ## 3. Versioning & Breaking Changes

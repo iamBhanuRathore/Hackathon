@@ -25,6 +25,7 @@ out/
 # IDE & OS
 .DS_Store
 *.pem
+*.backup.json
 .vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
+.vscode/settings.json
+.vscode/extensions.json

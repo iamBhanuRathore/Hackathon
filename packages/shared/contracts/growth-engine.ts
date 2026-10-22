@@ -127,4 +127,35 @@ export interface GrowthEngineData {
   categories: CategoryMetric[];
   schemes: SchemePerformance[];
   reps: RepProductivity[];
+  retailers?: RetailerRecord[];
 }
+
+export interface RetailerRecord {
+  retailer_id: string;
+  retailer_name: string;
+  retailer_type: string;
+  tier: 'A' | 'B' | 'C';
+  city: string;
+  distributor_name: string;
+  rep_name: string;
+  credit_limit: number;
+  last_order_date: string;
+  days_since_last_order: number;
+  sales_value_12m: number;
+  orders_12m: number;
+  status: 'Active' | 'Dormant' | 'Inactive';
+}
+
+export type ManagedEntityType = 'retailers' | 'leakages' | 'directives' | 'schemes' | 'reps';
+
+export interface DataMutationResponse<T = any> {
+  action: 'CREATE' | 'UPDATE' | 'DELETE';
+  entityType: ManagedEntityType;
+  record?: T;
+  recalculatedKpis: EngineKPIs;
+  summary: {
+    totalRecords: number;
+    updatedAt: string;
+  };
+}
+

@@ -52,6 +52,11 @@
   - **Inputs:** Cleaned multi-echelon transactions and stock levels
   - **Outputs:** `apps/backend/src/routes/growth.ts`, updated `apps/backend/src/server.ts`
   - **Validation:** Endpoints active at `/api/v1/engine/summary`, `/leakages`, `/directives`, `/territories`, `/categories`, `/reps`, `/schemes`.
+- [x] `TASK-P2-103`: Real-Time Data Mutation Engine & Dynamic KPI Recalculation (CRUD & Retailers)
+  - **Inputs:** `RetailerRecord`, `ManagedEntityType`, `DataMutationResponse` contracts in `growth-engine.ts`.
+  - **Outputs:** `apps/backend/src/routes/growth.ts`, `apps/backend/src/server.ts`
+  - **Validation:** Added in-memory caching with automatic disk persistence, automatic initial backup (`growth_engine_data.backup.json`), live dynamic recalculation of all KPIs (silent churn, ghost stockouts, strike rates, scheme lifts), and endpoints `/api/v1/engine/retailers`, `/api/v1/data/:entity`, `/api/v1/data/:entity/:id`, and `/api/v1/data/reset`.
+
 
 ### P3: AI & Intelligence Team (`apps/ai-service/`)
 - [x] `TASK-P3-101`: Prescriptive Action Generation Pipeline (LLM Directive Layer)
