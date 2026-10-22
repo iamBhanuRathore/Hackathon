@@ -37,6 +37,11 @@
   - **Inputs:** Chart.js CDN, `engineData` telemetry across territories, categories, leakages, inventory, reps, and schemes.
   - **Outputs:** `apps/frontend/src/index.html`, `apps/frontend/src/styles.css`, `apps/frontend/src/app.js`
   - **Validation:** 6 interactive responsive charts: Territory Grouped Bars, Category Revenue Doughnut, Opportunity Loss Vectors, Stock Health Profile, Rep Strike Rate vs Drive-Bys, and Scheme Commercial ROI. Full executive white theme with high-contrast palette and tab-switch auto-resizing.
+- [x] `TASK-P1-104`: Territory & Category Table Polish, Progress Bar Gradient Rendering & Height Balance
+  - **Inputs:** User feedback on visual voids, broken inline progress bar widths, and text wrapping.
+  - **Outputs:** `apps/frontend/src/styles.css`, `apps/frontend/src/index.html`, `apps/frontend/src/app.js`
+  - **Validation:** Fixed progress bar rendering with `display: block` and multi-stop gradients (emerald/amber/rose); resolved Bhubaneswar (T12) wrap with `.td-territory` badge; eliminated 400px whitespace void with embedded Category Concentration & Rebalancing Takeaway card.
+
 
 ### P2: Backend Team (`apps/backend/`)
 - [x] `TASK-P2-101`: Ingestion Pipeline & Relational Schema for 8 Core Hackathon Datasets

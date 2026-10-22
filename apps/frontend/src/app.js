@@ -170,15 +170,20 @@ function renderOverview() {
     const tr = document.createElement('tr');
     const fillClass = t.fill_rate < 97 ? 'danger' : (t.fill_rate < 98.5 ? 'warning' : '');
     tr.innerHTML = `
-      <td><strong>${t.territory_name}</strong> <small style="color:var(--text-muted)">(${t.territory_id})</small></td>
-      <td>₹${(t.order_value / 100000).toFixed(1)}L</td>
-      <td>₹${(t.delivered_value / 100000).toFixed(1)}L</td>
-      <td style="color:var(--accent-rose); font-weight:700">₹${(t.lost_value).toLocaleString('en-IN')}</td>
+      <td class="td-territory">
+        <span class="territory-name">${t.territory_name}</span>
+        <span class="territory-code">${t.territory_id}</span>
+      </td>
+      <td class="td-num">₹${(t.order_value / 100000).toFixed(1)}L</td>
+      <td class="td-num">₹${(t.delivered_value / 100000).toFixed(1)}L</td>
+      <td class="td-num td-loss">₹${(t.lost_value).toLocaleString('en-IN')}</td>
       <td>
-        <span class="progress-bar-wrap">
-          <span class="progress-bar-fill ${fillClass}" style="width: ${Math.min(t.fill_rate, 100)}%"></span>
-        </span>
-        ${t.fill_rate}%
+        <div class="fill-rate-cell">
+          <div class="progress-bar-wrap" title="Fill Rate: ${t.fill_rate}%">
+            <div class="progress-bar-fill ${fillClass}" style="width: ${Math.min(t.fill_rate, 100)}%"></div>
+          </div>
+          <span class="fill-rate-val">${t.fill_rate}%</span>
+        </div>
       </td>
     `;
     terrTbody.appendChild(tr);
@@ -189,15 +194,18 @@ function renderOverview() {
   catTbody.innerHTML = '';
   engineData.categories.forEach(c => {
     const tr = document.createElement('tr');
+    const fillClass = c.fill_rate < 97.5 ? 'danger' : (c.fill_rate < 99 ? 'warning' : '');
     tr.innerHTML = `
-      <td><strong>${c.category}</strong></td>
-      <td>₹${(c.delivered_value / 10000000).toFixed(2)} Cr</td>
-      <td style="color:var(--accent-rose); font-weight:700">₹${(c.lost_value).toLocaleString('en-IN')}</td>
+      <td><strong style="color:var(--text-primary)">${c.category}</strong></td>
+      <td class="td-num">₹${(c.delivered_value / 10000000).toFixed(2)} Cr</td>
+      <td class="td-num td-loss">₹${(c.lost_value).toLocaleString('en-IN')}</td>
       <td>
-        <span class="progress-bar-wrap">
-          <span class="progress-bar-fill" style="width: ${Math.min(c.fill_rate, 100)}%"></span>
-        </span>
-        ${c.fill_rate}%
+        <div class="fill-rate-cell">
+          <div class="progress-bar-wrap" title="Fill Rate: ${c.fill_rate}%">
+            <div class="progress-bar-fill ${fillClass}" style="width: ${Math.min(c.fill_rate, 100)}%"></div>
+          </div>
+          <span class="fill-rate-val">${c.fill_rate}%</span>
+        </div>
       </td>
     `;
     catTbody.appendChild(tr);

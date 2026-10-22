@@ -873,9 +873,10 @@ body {
 }
 
 .data-table td {
-  padding: 13px 14px;
+  padding: 12px 14px;
   border-bottom: 1px solid #F1F5F9;
   color: var(--text-secondary);
+  vertical-align: middle;
 }
 
 .data-table tr:hover td {
@@ -883,25 +884,177 @@ body {
   color: var(--text-primary);
 }
 
+.td-territory {
+  white-space: nowrap;
+}
+
+.territory-name {
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-right: 6px;
+}
+
+.territory-code {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.td-num {
+  font-family: var(--font-mono);
+  font-size: 0.83rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.td-loss {
+  color: var(--accent-rose) !important;
+  font-weight: 700;
+}
+
+.fill-rate-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fill-rate-val {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 52px;
+}
+
 .progress-bar-wrap {
-  width: 80px;
-  height: 7px;
+  width: 76px;
+  height: 8px;
   background: #E2E8F0;
   border-radius: var(--radius-full);
   overflow: hidden;
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 8px;
+  display: block;
+  flex-shrink: 0;
+  position: relative;
 }
 
 .progress-bar-fill {
+  display: block;
   height: 100%;
-  background: var(--accent-emerald);
+  background: linear-gradient(90deg, #10B981, #059669);
   border-radius: var(--radius-full);
+  transition: width 0.3s ease;
 }
 
-.progress-bar-fill.warning { background: var(--accent-amber); }
-.progress-bar-fill.danger { background: var(--accent-rose); }
+.progress-bar-fill.warning {
+  background: linear-gradient(90deg, #F59E0B, #D97706);
+}
+
+.progress-bar-fill.danger {
+  background: linear-gradient(90deg, #EF4444, #DC2626);
+}
+
+/* Category Takeaway & Rebalancing Intelligence Card */
+.category-takeaway-box {
+  margin-top: 20px;
+  background: #F8FAFC;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+}
+
+.takeaway-header {
+  margin-bottom: 14px;
+}
+
+.takeaway-badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--primary);
+  background: var(--primary-subtle);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.takeaway-header h4 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.takeaway-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.takeaway-metric-item {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.takeaway-metric-item .item-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.takeaway-metric-item .item-val {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.takeaway-metric-item .item-val.alert {
+  color: var(--accent-rose);
+}
+
+.takeaway-metric-item .item-val.positive {
+  color: var(--accent-emerald);
+}
+
+.takeaway-metric-item .item-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.takeaway-action-note {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 12px;
+}
+
+.takeaway-action-note .action-bullet {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.takeaway-action-note strong {
+  color: var(--text-primary);
+}
 
 /* Mandate Card */
 .mandate-card {
